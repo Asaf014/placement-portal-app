@@ -1,0 +1,117 @@
+QUICK START GUIDE - PLACEMENT PORTAL APPLICATION
+
+SYSTEM REQUIREMENTS:
+====================
+Windows 10/11, Python 3.8+, Node.js 14+, Redis Server
+
+INSTALLATION (5 MINUTES):
+=========================
+
+1. Download and Install Dependencies:
+   - Python from https://python.org (add to PATH)
+   - Node.js from https://nodejs.org
+   - Redis from https://github.com/microsoftarchive/redis/releases
+
+2. Run Setup:
+   - Open Command Prompt
+   - Navigate to project folder
+   - Run: setup.bat
+   - Wait for completion (automatic pip install, npm install)
+
+3. Verify Setup:
+   Run in 4 separate terminals:
+   
+   Terminal 1 - Redis Server:
+   redis-server
+
+   Terminal 2 - Backend:
+   cd backend
+   venv\Scripts\activate
+   python app.py
+   
+   Terminal 3 - Celery Worker:
+   cd backend
+   venv\Scripts\activate
+   celery -A tasks.celery_tasks worker --loglevel=info
+   
+   Terminal 4 - Frontend:
+   cd frontend
+   npm run dev
+
+4. Access Application:
+   Browser: http://localhost:8080
+
+5. Login with Admin Credentials:
+   Email: admin@placementportal.com
+   Password: admin123
+
+FEATURES AT A GLANCE:
+====================
+- Admin Dashboard: Overview, approve companies/drives, manage users
+- Company Portal: Register, create drives, shortlist candidates
+- Student Portal: Browse drives, apply, track applications
+- Background Jobs: Email reminders, monthly reports, CSV export
+- Caching: Redis caching for performance
+- Search: Find companies and students by name/details
+
+TROUBLESHOOTING:
+================
+
+Q: Redis not starting on Windows?
+A: Download Redis from microsoftarchive/redis releases or use WSL2
+
+Q: Port 5000 already in use?
+A: Kill process: netstat -ano | findstr :5000 | taskkill /PID <pid> /F
+
+Q: Frontend not connecting to backend?
+A: Ensure backend running on 5000, frontend on 8080
+
+Q: Database locked error?
+A: Delete placement_portal.db and restart
+
+Q: Module not found?
+A: Ensure venv activated: venv\Scripts\activate
+
+NEXT STEPS:
+===========
+
+1. Register a company: http://localhost:8080/register
+2. Login as admin: approve the company
+3. Create a placement drive as company
+4. Login as admin: approve the drive
+5. Register and login as student
+6. Browse and apply for drives
+7. Company: shortlist and select students
+
+PROJECT STRUCTURE:
+==================
+backend/ - Flask API server (port 5000)
+frontend/ - Vue.js SPA (port 8080)
+setup.bat - Automatic setup script
+README.md - Detailed documentation
+
+DEFAULT CREDENTIALS:
+====================
+Admin Email: admin@placementportal.com
+Admin Password: admin123
+
+(Companies and Students register themselves)
+
+PORTS USED:
+===========
+Backend: 5000
+Frontend: 8080 (dev server)
+Redis: 6379
+
+To change ports, edit:
+- Backend: app.py (app.run(port=...))
+- Frontend: vue.config.js (devServer port)
+
+DATABASE:
+=========
+SQLite file: backend/placement_portal.db
+Auto-created on first run
+Tables auto-created from models
+Admin auto-created on initialization
+
+For help, see README.md or IMPLEMENTATION_GUIDE.txt
